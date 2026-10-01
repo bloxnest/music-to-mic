@@ -12,6 +12,8 @@ set "FW=%CSC:\csc.exe=%"
 
 "%CSC%" /nologo /target:exe /optimize+ /unsafe /out:bin\ToneApp.exe ^
     ..\src\Audio\CoreAudio.cs ..\src\Audio\Streams.cs ..\src\Audio\Devices.cs ToneApp.cs || exit /b 1
+"%CSC%" /nologo /target:exe /optimize+ /unsafe /out:bin\SpotifyDemo.exe ^
+    ..\src\Audio\CoreAudio.cs ..\src\Audio\Streams.cs ..\src\Audio\Devices.cs ToneApp.cs DemoInfo.cs || exit /b 1
 
 "%CSC%" /nologo /target:exe /optimize+ /unsafe /codepage:65001 /main:MusicToMic.Tests.SelfTest /out:bin\SelfTest.exe ^
     /win32manifest:..\app.manifest /win32icon:..\assets\icon.ico ^

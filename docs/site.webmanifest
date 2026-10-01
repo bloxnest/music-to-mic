@@ -1,0 +1,14 @@
+{
+  "name": "Music to Mic",
+  "short_name": "Music to Mic",
+  "description": "Play music in Roblox voice chat on Windows, by xRed1.",
+  "start_url": "/music-to-mic/",
+  "scope": "/music-to-mic/",
+  "display": "browser",
+  "background_color": "#0d0c12",
+  "theme_color": "#0d0c12",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

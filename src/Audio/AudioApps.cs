@@ -44,6 +44,14 @@ namespace MusicToMic.Audio
         }
 
         private static readonly Dictionary<int, Owner> owners = new Dictionary<int, Owner>();
+
+        /// <summary>Windows' own audio and service processes: never a music source.</summary>
+        private static readonly HashSet<string> SystemProcesses = new HashSet<string>
+        {
+            "audiodg.exe", "svchost.exe", "system", "csrss.exe", "winlogon.exe", "services.exe", "lsass.exe",
+        };
+
+        public static bool IsSystemProcess(string exe) { return SystemProcesses.Contains(exe.ToLowerInvariant()); }
         private static readonly int self = Process.GetCurrentProcess().Id;
 
         public static List<AudioApp> List()
@@ -61,7 +69,7 @@ namespace MusicToMic.Audio
                 Owner owner;
                 if (session.ProcessId == 0 || !owners.TryGetValue(session.ProcessId, out owner)) continue;
                 alive.Add(session.ProcessId);
-                if (owner.Exe == null || owner.Root == self || session.ProcessId == self) continue;
+                if (owner.Exe == null || owner.Root == self || session.ProcessId == self || SystemProcesses.Contains(owner.Exe)) continue;
                 AudioApp app;
                 if (!byExe.TryGetValue(owner.Exe, out app))
                 {

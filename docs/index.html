@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Music to Mic | Play Music in Roblox Voice Chat</title>
+  <meta name="description" content="Play Spotify, YouTube or any app through your mic in Roblox voice chat, with your voice on top. Free and open source for Windows. Made by xRed1.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="xRed1">
+  <meta name="application-name" content="Music to Mic">
+  <meta name="theme-color" content="#0d0c12">
+  <link rel="canonical" href="https://bloxnest.github.io/music-to-mic/">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Music to Mic">
+  <meta property="og:title" content="Music to Mic | Play Music in Roblox Voice Chat">
+  <meta property="og:description" content="Your music, in Roblox voice chat. Play Spotify, YouTube or any app through your mic, with your voice on top. Free for Windows.">
+  <meta property="og:url" content="https://bloxnest.github.io/music-to-mic/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://bloxnest.github.io/music-to-mic/assets/og-image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Music to Mic logo and headline next to the app window, routing Spotify and a microphone into Roblox voice chat.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Music to Mic | Play Music in Roblox Voice Chat">
+  <meta name="twitter:description" content="Play Spotify, YouTube or any app through your mic in Roblox voice chat. Free for Windows.">
+  <meta name="twitter:image" content="https://bloxnest.github.io/music-to-mic/assets/og-image.jpg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Music to Mic",
+    "url": "https://bloxnest.github.io/music-to-mic/",
+    "description": "Play an app's audio, like Spotify or YouTube, through a virtual microphone in Roblox voice chat, mixed with your real mic.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Windows 10, Windows 11",
+    "softwareVersion": "1.0.0",
+    "downloadUrl": "https://github.com/bloxnest/music-to-mic/releases/latest/download/MusicToMic.exe",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": 0, "priceCurrency": "USD" },
+    "license": "https://github.com/bloxnest/music-to-mic/blob/main/LICENSE",
+    "image": "https://bloxnest.github.io/music-to-mic/assets/og-image.jpg",
+    "screenshot": ["https://bloxnest.github.io/music-to-mic/assets/app-main.png"],
+    "sameAs": ["https://github.com/bloxnest/music-to-mic"],
+    "author": { "@type": "Person", "name": "xRed1" }
+  }
+  </script>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+  <!-- Interface icons: Lucide (ISC licence). Brand marks: GitHub and Microsoft Windows. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></symbol>
+      <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></symbol>
+      <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></symbol>
+      <symbol id="i-music" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+      <symbol id="i-keyboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"/></symbol>
+      <symbol id="i-activity" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></symbol>
+      <symbol id="i-timer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></symbol>
+      <symbol id="i-panel-bottom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 15h18"/></symbol>
+      <symbol id="i-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
+      <symbol id="i-wifi-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/><path d="M5 12.86a10 10 0 0 1 5.17-2.69"/><path d="M19 12.86a10 10 0 0 0-2-1.52"/><path d="M2 8.82a15 15 0 0 1 4.18-2.64"/><path d="M22 8.82a15 15 0 0 0-11.29-3.76"/><path d="m2 2 20 20"/></symbol>
+      <symbol id="i-file-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/></symbol>
+      <symbol id="i-feather" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12.67 19a2 2 0 0 0 1.42-.59l6.15-6.17a6 6 0 0 0-8.49-8.49L5.59 9.91A2 2 0 0 0 5 11.33V18a1 1 0 0 0 1 1z"/><path d="M16 8 2 22"/><path d="M17.5 15H9"/></symbol>
+      <symbol id="i-test-tube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2v17.5c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5V2"/><path d="M8.5 2h7"/><path d="M14.5 16h-5"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+      <symbol id="i-github" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></symbol>
+      <symbol id="i-windows" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/></symbol>
+    </defs>
+  </svg>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="./" aria-label="Music to Mic home">
+        <img src="assets/logo.svg" width="32" height="32" alt="">
+        <span>Music to Mic</span>
+      </a>
+      <div class="nav-actions">
+        <a class="text-link" href="guide.html">Setup guide</a>
+        <a class="text-link nav-github" href="https://github.com/bloxnest/music-to-mic">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg>GitHub
+        </a>
+        <a class="button button-small" href="https://github.com/bloxnest/music-to-mic/releases/latest/download/MusicToMic.exe" aria-label="Download Music to Mic for Windows">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <svg class="hero-wave" viewBox="0 0 1200 240" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <g fill="currentColor"><rect x="0.0" y="100.4" width="6" height="39.1" rx="3"/><rect x="12.5" y="98.3" width="6" height="43.4" rx="3"/><rect x="25.0" y="96.5" width="6" height="47.0" rx="3"/><rect x="37.5" y="95.0" width="6" height="49.9" rx="3"/><rect x="50.0" y="93.9" width="6" height="52.2" rx="3"/><rect x="62.5" y="93.1" width="6" height="53.8" rx="3"/><rect x="75.0" y="92.6" width="6" height="54.8" rx="3"/><rect x="87.5" y="92.3" width="6" height="55.3" rx="3"/><rect x="100.0" y="92.2" width="6" height="55.6" rx="3"/><rect x="112.5" y="92.1" width="6" height="55.7" rx="3"/><rect x="125.0" y="92.0" width="6" height="56.0" rx="3"/><rect x="137.5" y="91.8" width="6" height="56.5" rx="3"/><rect x="150.0" y="91.3" width="6" height="57.4" rx="3"/><rect x="162.5" y="90.5" width="6" height="58.9" rx="3"/><rect x="175.0" y="89.4" width="6" height="61.1" rx="3"/><rect x="187.5" y="88.0" width="6" height="64.0" rx="3"/><rect x="200.0" y="86.2" width="6" height="67.6" rx="3"/><rect x="212.5" y="84.1" width="6" height="71.8" rx="3"/><rect x="225.0" y="81.8" width="6" height="76.4" rx="3"/><rect x="237.5" y="79.4" width="6" height="81.3" rx="3"/><rect x="250.0" y="76.9" width="6" height="86.2" rx="3"/><rect x="262.5" y="74.6" width="6" height="90.8" rx="3"/><rect x="275.0" y="72.6" width="6" height="94.9" rx="3"/><rect x="287.5" y="70.9" width="6" height="98.1" rx="3"/><rect x="300.0" y="69.8" width="6" height="100.4" rx="3"/><rect x="312.5" y="69.3" width="6" height="101.3" rx="3"/><rect x="325.0" y="69.6" width="6" height="100.9" rx="3"/><rect x="337.5" y="70.5" width="6" height="98.9" rx="3"/><rect x="350.0" y="72.3" width="6" height="95.5" rx="3"/><rect x="362.5" y="74.7" width="6" height="90.7" rx="3"/><rect x="375.0" y="77.7" width="6" height="84.6" rx="3"/><rect x="387.5" y="81.2" width="6" height="77.6" rx="3"/><rect x="400.0" y="85.1" width="6" height="69.8" rx="3"/><rect x="412.5" y="89.2" width="6" height="61.6" rx="3"/><rect x="425.0" y="93.3" width="6" height="53.4" rx="3"/><rect x="437.5" y="97.3" width="6" height="45.4" rx="3"/><rect x="450.0" y="100.4" width="6" height="39.3" rx="3"/><rect x="462.5" y="97.0" width="6" height="46.0" rx="3"/><rect x="475.0" y="94.2" width="6" height="51.6" rx="3"/><rect x="487.5" y="92.1" width="6" height="55.8" rx="3"/><rect x="500.0" y="90.7" width="6" height="58.5" rx="3"/><rect x="512.5" y="90.1" width="6" height="59.8" rx="3"/><rect x="525.0" y="90.2" width="6" height="59.7" rx="3"/><rect x="537.5" y="90.8" width="6" height="58.4" rx="3"/><rect x="550.0" y="92.0" width="6" height="56.1" rx="3"/><rect x="562.5" y="93.5" width="6" height="53.1" rx="3"/><rect x="575.0" y="95.2" width="6" height="49.6" rx="3"/><rect x="587.5" y="96.9" width="6" height="46.1" rx="3"/><rect x="600.0" y="98.6" width="6" height="42.8" rx="3"/><rect x="612.5" y="100.0" width="6" height="40.0" rx="3"/><rect x="625.0" y="99.0" width="6" height="42.1" rx="3"/><rect x="637.5" y="98.4" width="6" height="43.3" rx="3"/><rect x="650.0" y="98.2" width="6" height="43.5" rx="3"/><rect x="662.5" y="98.6" width="6" height="42.8" rx="3"/><rect x="675.0" y="99.4" width="6" height="41.2" rx="3"/><rect x="687.5" y="100.0" width="6" height="40.1" rx="3"/><rect x="700.0" y="98.7" width="6" height="42.6" rx="3"/><rect x="712.5" y="97.3" width="6" height="45.4" rx="3"/><rect x="725.0" y="96.0" width="6" height="48.0" rx="3"/><rect x="737.5" y="94.8" width="6" height="50.4" rx="3"/><rect x="750.0" y="94.0" width="6" height="52.1" rx="3"/><rect x="762.5" y="93.5" width="6" height="52.9" rx="3"/><rect x="775.0" y="93.7" width="6" height="52.7" rx="3"/><rect x="787.5" y="94.4" width="6" height="51.2" rx="3"/><rect x="800.0" y="95.7" width="6" height="48.5" rx="3"/><rect x="812.5" y="97.7" width="6" height="44.6" rx="3"/><rect x="825.0" y="100.2" width="6" height="39.5" rx="3"/><rect x="837.5" y="100.4" width="6" height="39.2" rx="3"/><rect x="850.0" y="97.4" width="6" height="45.2" rx="3"/><rect x="862.5" y="94.2" width="6" height="51.6" rx="3"/><rect x="875.0" y="91.0" width="6" height="58.0" rx="3"/><rect x="887.5" y="87.9" width="6" height="64.3" rx="3"/><rect x="900.0" y="85.0" width="6" height="69.9" rx="3"/><rect x="912.5" y="82.6" width="6" height="74.8" rx="3"/><rect x="925.0" y="80.7" width="6" height="78.6" rx="3"/><rect x="937.5" y="79.4" width="6" height="81.1" rx="3"/><rect x="950.0" y="78.8" width="6" height="82.3" rx="3"/><rect x="962.5" y="78.9" width="6" height="82.1" rx="3"/><rect x="975.0" y="79.7" width="6" height="80.5" rx="3"/><rect x="987.5" y="81.1" width="6" height="77.7" rx="3"/><rect x="1000.0" y="83.1" width="6" height="73.8" rx="3"/><rect x="1012.5" y="85.5" width="6" height="69.0" rx="3"/><rect x="1025.0" y="88.2" width="6" height="63.7" rx="3"/><rect x="1037.5" y="91.1" width="6" height="57.9" rx="3"/><rect x="1050.0" y="94.0" width="6" height="52.0" rx="3"/><rect x="1062.5" y="96.8" width="6" height="46.3" rx="3"/><rect x="1075.0" y="99.5" width="6" height="41.0" rx="3"/><rect x="1087.5" y="101.9" width="6" height="36.2" rx="3"/><rect x="1100.0" y="104.0" width="6" height="32.0" rx="3"/><rect x="1112.5" y="105.7" width="6" height="28.6" rx="3"/><rect x="1125.0" y="107.0" width="6" height="26.0" rx="3"/><rect x="1137.5" y="107.6" width="6" height="24.7" rx="3"/><rect x="1150.0" y="107.6" width="6" height="24.9" rx="3"/><rect x="1162.5" y="107.7" width="6" height="24.5" rx="3"/><rect x="1175.0" y="108.1" width="6" height="23.9" rx="3"/><rect x="1187.5" y="108.5" width="6" height="23.0" rx="3"/></g>
+      </svg>
+      <div class="hero-grid container">
+        <div class="hero-copy">
+          <h1 id="hero-title">Your music, <span>in Roblox voice chat.</span></h1>
+          <p class="hero-description">Music to Mic plays Spotify, YouTube or any app through your mic, with your voice on top. Only the app you pick is sent, so Discord pings and game sounds stay out.</p>
+          <div class="actions">
+            <a class="button" href="https://github.com/bloxnest/music-to-mic/releases/latest/download/MusicToMic.exe">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download Music to Mic
+            </a>
+            <a class="button button-secondary" href="guide.html">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"/></svg>Setup guide
+            </a>
+          </div>
+          <p class="platform">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-windows"/></svg>Free for Windows 10 and 11 · Needs VB-CABLE (free) · Open source (MIT)
+          </p>
+        </div>
+        <img class="hero-app shot" src="assets/app-main.png" width="468" height="819" loading="eager" fetchpriority="high" decoding="async"
+             alt="Music to Mic window routing Spotify and a microphone into CABLE Input, with the music, mic and output meters lit.">
+      </div>
+    </section>
+
+    <section class="section container" aria-labelledby="features-title">
+      <h2 class="section-title" id="features-title" data-reveal>Just the music you pick. Then your voice.</h2>
+      <ul class="three-columns" role="list">
+        <li class="feature" data-reveal data-delay="60">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-filter"/></svg>
+          <h3>One app, nothing else</h3>
+          <p>Pick Spotify, Chrome, VLC or any app. Discord pings, game sounds and notifications aren't sent.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="120">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg>
+          <h3>Your voice and the music</h3>
+          <p>Mic only, music only, or both, each with its own volume. Presets like Background Music keep it under your voice.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="180">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-keyboard"/></svg>
+          <h3>Push-to-music</h3>
+          <p>Hold F8, or a mouse side button, to send music. Let go and it stops. Roblox push-to-talk works as normal.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="60">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-activity"/></svg>
+          <h3>Never too loud</h3>
+          <p>Live meters show the music, your mic and the mix, and a limiter stops it clipping before anyone's ears get blasted.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="120">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-timer"/></svg>
+          <h3>In sync for hours</h3>
+          <p>About a tenth of a second behind, and it stays that way. No drifting, no stutter, even on long sessions.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="180">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-panel-bottom"/></svg>
+          <h3>Out of your way</h3>
+          <p>Close it and it keeps playing from the hidden icons, using almost no CPU. If the music app closes, it waits for it.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section container" aria-labelledby="how-title" data-reveal>
+      <h2 class="section-title" id="how-title">Three steps, once.</h2>
+      <ol class="three-columns steps" role="list">
+        <li class="step">
+          <span class="step-number" aria-hidden="true">01</span>
+          <h3>Install VB-CABLE</h3>
+          <p>A free virtual microphone by VB-Audio. Windows needs it to give Roblox a new mic.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">02</span>
+          <h3>Pick the music and your mic</h3>
+          <p>Open Music to Mic, choose the app playing music and your real mic, and press Start routing.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">03</span>
+          <h3>Choose CABLE Output in Roblox</h3>
+          <p>In Roblox's settings, set your microphone to CABLE Output. That's it.</p>
+        </li>
+      </ol>
+      <a class="more-link" href="guide.html">Read the full setup guide <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
+    </section>
+
+    <section class="section container" aria-labelledby="showcase-title">
+      <div class="split">
+        <img class="showcase-art shot" src="assets/app-setup.png" width="468" height="819" loading="lazy" decoding="async" data-reveal
+             alt="Music to Mic's Roblox Setup page: virtual microphone found, and the seven setup steps.">
+        <div class="showcase-copy" data-reveal data-delay="90">
+          <h2 id="showcase-title">To Roblox, it's<br>just a microphone.</h2>
+          <p>Music to Mic never touches Roblox. It mixes your music and your voice into a virtual cable, and Roblox listens to that cable like any other mic.</p>
+          <ul class="points">
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield-check"/></svg>No injection, no Roblox files, no memory access</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg>Works with Roblox push-to-talk and mute</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-music"/></svg>Built-in setup page that checks VB-CABLE for you</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="safety" aria-labelledby="safety-title">
+      <h2 class="section-title" id="safety-title" data-reveal>Check the facts, not a badge.</h2>
+      <p class="section-intro" data-reveal>The code, the build and the limits are all public.</p>
+      <ul class="three-columns" role="list">
+        <li class="feature" data-reveal data-delay="60">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-code"/></svg>
+          <h3>Every line is public</h3>
+          <p>The full source is on GitHub under the MIT license. Read it, or build it yourself with what's already in Windows.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="120">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-wifi-off"/></svg>
+          <h3>No internet, no recording</h3>
+          <p>The app never goes online and never saves audio. Its small log only says what happened, like "routing started".</p>
+        </li>
+        <li class="feature" data-reveal data-delay="180">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-keyboard"/></svg>
+          <h3>Keys are read, not hooked</h3>
+          <p>Push-to-music only checks whether your key is held. It never blocks it, so Roblox still gets every key.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="60">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-file-check"/></svg>
+          <h3>Built by GitHub, not by hand</h3>
+          <p>Every release is built from the public code by GitHub Actions, with a checksum and a signed build record.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="120">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-feather"/></svg>
+          <h3>Small, no admin</h3>
+          <p>One exe of about 250 KB. No installer and no administrator rights (only VB-CABLE's own installer needs them).</p>
+        </li>
+        <li class="feature" data-reveal data-delay="180">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-test-tube"/></svg>
+          <h3>Tested for real</h3>
+          <p>87 self-tests check that only the chosen app is sent, through the real cable, and a 10-minute run checks nothing drifts.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section container" id="verify" aria-labelledby="verify-title">
+      <div class="split verify-grid" data-reveal>
+        <div class="verify-copy">
+          <h2 id="verify-title">Check the download yourself.</h2>
+          <p>Every release lists its SHA-256 checksum. Compare it with your copy, and with the GitHub CLI you can confirm GitHub built it from this code.</p>
+          <p class="fine">These checks prove the file is the one GitHub built from the public source. They're not Roblox approval.</p>
+        </div>
+        <div class="commands">
+          <div class="command">
+            <div class="command-head"><span>PowerShell: checksum</span><button class="copy" type="button" data-copy="c1">Copy</button></div>
+            <pre id="c1">Get-FileHash .\MusicToMic.exe -Algorithm SHA256</pre>
+          </div>
+          <div class="command">
+            <div class="command-head"><span>GitHub CLI: build provenance</span><button class="copy" type="button" data-copy="c2">Copy</button></div>
+            <pre id="c2">gh attestation verify MusicToMic.exe --repo bloxnest/music-to-mic</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" aria-labelledby="story-title">
+      <div class="split story-grid" data-reveal>
+        <div>
+          <h2 id="story-title">A small app from xRed1.</h2>
+          <p class="signature">xRed1, student developer</p>
+        </div>
+        <div class="story-copy">
+          <p>I'm xRed1, the student behind BloxNest and NudgeNest. Music to Mic is free, has no ads and no accounts, and every line is on GitHub. If something doesn't work, open an issue there and I'll take a look.</p>
+          <p class="aside">More from me: <a href="https://bloxnest.github.io/">BloxNest</a> (more Roblox windows) and <a href="https://bloxnest.github.io/nudge-nest/">NudgeNest</a> (no more idle kicks).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="faq" aria-labelledby="faq-title">
+      <div class="split faq-grid" data-reveal>
+        <h2 id="faq-title">A few quick answers.</h2>
+        <div class="faq-list">
+          <details>
+            <summary><span>Do my friends need it too?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">No. Only the person playing the music needs Music to Mic and VB-CABLE. Everyone else just hears your mic in Roblox.</p>
+          </details>
+          <details>
+            <summary><span>Why do I need VB-CABLE?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">Windows can't create a new microphone without a signed driver. VB-CABLE is a free, signed virtual audio cable by VB-Audio: Music to Mic plays into "CABLE Input", and Roblox hears it from "CABLE Output". VoiceMeeter and Virtual Audio Cable work too.</p>
+          </details>
+          <details>
+            <summary><span>I can't hear anything since installing VB-CABLE</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">Windows sometimes makes CABLE Input your default speakers after the install. Set your real speakers back in Windows Sound settings; Music to Mic warns you when this happens. <a href="guide.html#speakers">How to fix it</a>.</p>
+          </details>
+          <details>
+            <summary><span>Is it allowed in Roblox?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">To Roblox it's just a microphone input; nothing about Roblox is changed. Follow Roblox's rules for voice chat and only play music you're allowed to share. Music to Mic isn't made or approved by Roblox, so use it at your own risk.</p>
+          </details>
+          <details>
+            <summary><span>Is there a delay?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">About a tenth of a second from the music app to Roblox's mic, and it stays steady for hours.</p>
+          </details>
+          <details>
+            <summary><span>Why does Windows show a warning?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">Music to Mic isn't code-signed yet, so Windows may say "Windows protected your PC". If you downloaded it from this site or GitHub, choose More info, then Run anyway. You can check the checksum first.</p>
+          </details>
+          <details>
+            <summary><span>Does it work on Mac, phone or console?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">No. It needs Windows 10 (version 2004 or newer) or Windows 11, and the Roblox app on that PC.</p>
+          </details>
+          <details>
+            <summary><span>How do I uninstall it?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">Right-click the icon in the hidden icons and choose Exit, then delete MusicToMic.exe and the %APPDATA%\MusicToMic folder. To remove VB-CABLE, run its setup again as administrator and choose Remove Driver.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section download" aria-labelledby="download-title">
+      <div class="split download-grid container" data-reveal>
+        <h2 id="download-title">Bring the music.</h2>
+        <div class="download-cta">
+          <div class="actions">
+            <a class="button" href="https://github.com/bloxnest/music-to-mic/releases/latest/download/MusicToMic.exe">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download Music to Mic
+            </a>
+            <a class="button button-secondary" href="guide.html">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"/></svg>Setup guide
+            </a>
+          </div>
+          <p class="platform">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-windows"/></svg>Free for Windows 10 and 11 · Not code-signed yet
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <p>Made by xRed1 · Open source (MIT)</p>
+        <nav class="footer-links" aria-label="Footer navigation">
+          <a class="text-link" href="guide.html">Setup guide</a>
+          <a class="text-link" href="https://github.com/bloxnest/music-to-mic">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg>GitHub
+          </a>
+          <a class="text-link" href="https://github.com/bloxnest/music-to-mic/releases">Releases</a>
+          <a class="text-link" href="https://github.com/bloxnest/music-to-mic/blob/main/PRIVACY.md">Privacy</a>
+          <a class="text-link" href="https://bloxnest.github.io/">BloxNest</a>
+        </nav>
+      </div>
+      <p class="disclaimer">Not affiliated with or endorsed by Roblox Corporation or VB-Audio. Roblox is a trademark of Roblox Corporation. Follow Roblox's voice chat rules and only play music you're allowed to share.</p>
+    </div>
+  </footer>
+  <script src="assets/site.js"></script>
+</body>
+</html>

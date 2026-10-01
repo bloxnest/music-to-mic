@@ -482,7 +482,14 @@ namespace MusicToMic
         private void UpdateStatus()
         {
             string key = KeyNames.Name(settings.PushKey);
-            if (Routing)
+            string defaults = DefaultSpeakersWarning(Outputs);
+            if (defaults != null && lastError == null && !WaitingForSource)
+            {
+                Health = Health.Warning;
+                Status = Routing ? "Routing, but check your speakers" : "Check your speakers";
+                Detail = defaults;
+            }
+            else if (Routing)
             {
                 if (WaitingForSource)
                 {
@@ -520,6 +527,19 @@ namespace MusicToMic
                     : "Pick a virtual cable as the output so Roblox can use it as a mic.";
             }
             Raise();
+        }
+
+        /// <summary>
+        /// A common VB-CABLE surprise: after installing it, Windows may make the cable the default speakers. Then you
+        /// hear nothing and every app plays straight into the mic. Returns a warning, or null if the defaults are fine.
+        /// </summary>
+        public static string DefaultSpeakersWarning(List<AudioDevice> outputs)
+        {
+            foreach (AudioDevice d in outputs)
+                if (d.IsDefault && d.IsVirtualCable)
+                    return "Windows' default speakers are the virtual cable: you hear nothing and every app goes into the mic. "
+                        + "Set your real speakers as default in Sound settings.";
+            return null;
         }
 
         private static string ErrorHelp(string error)

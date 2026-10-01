@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Music to Mic | Play Music in Roblox Voice Chat</title>
+  <meta name="description" content="Play Spotify, YouTube or any app through your mic in Roblox voice chat, with your voice on top. Free and open source for Windows. Made by xRed1.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="xRed1">
+  <meta name="application-name" content="Music to Mic">
+  <meta name="theme-color" content="#0d0c12">
+  <link rel="canonical" href="https://bloxnest.github.io/music-to-mic/">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Music to Mic">
+  <meta property="og:title" content="Music to Mic | Play Music in Roblox Voice Chat">
+  <meta property="og:description" content="Your music, in Roblox voice chat. Play Spotify, YouTube or any app through your mic, with your voice on top. Free for Windows.">
+  <meta property="og:url" content="https://bloxnest.github.io/music-to-mic/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://bloxnest.github.io/music-to-mic/assets/og-image.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Music to Mic logo and headline next to the app window, routing Spotify and a microphone into Roblox voice chat.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Music to Mic | Play Music in Roblox Voice Chat">
+  <meta name="twitter:description" content="Play Spotify, YouTube or any app through your mic in Roblox voice chat. Free for Windows.">
+  <meta name="twitter:image" content="https://bloxnest.github.io/music-to-mic/assets/og-image.jpg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Music to Mic",
+    "url": "https://bloxnest.github.io/music-to-mic/",
+    "description": "Play an app's audio, like Spotify or YouTube, through a virtual microphone in Roblox voice chat, mixed with your real mic.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Windows 10, Windows 11",
+    "softwareVersion": "1.0.0",
+    "downloadUrl": "https://github.com/bloxnest/music-to-mic/releases/latest/download/MusicToMic.exe",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": 0, "priceCurrency": "USD" },
+    "license": "https://github.com/bloxnest/music-to-mic/blob/main/LICENSE",
+    "image": "https://bloxnest.github.io/music-to-mic/assets/og-image.jpg",
+    "screenshot": ["https://bloxnest.github.io/music-to-mic/assets/app-main.png"],
+    "sameAs": ["https://github.com/bloxnest/music-to-mic"],
+    "author": { "@type": "Person", "name": "xRed1" }
+  }
+  </script>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+{{SPRITE}}
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="./" aria-label="Music to Mic home">
+        <img src="assets/logo.svg" width="32" height="32" alt="">
+        <span>Music to Mic</span>
+      </a>
+      <div class="nav-actions">
+        <a class="text-link" href="guide.html">Setup guide</a>
+        <a class="text-link nav-github" href="https://github.com/bloxnest/music-to-mic">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-github"/></svg>GitHub
+        </a>
+        <a class="button button-small" href="https://github.com/bloxnest/music-to-mic/releases/latest/download/MusicToMic.exe" aria-label="Download Music to Mic for Windows">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <svg class="hero-wave" viewBox="0 0 1200 240" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <g fill="currentColor">{{BARS}}</g>
+      </svg>
+      <div class="hero-grid container">
+        <div class="hero-copy">
+          <h1 id="hero-title">Your music, <span>in Roblox voice chat.</span></h1>
+          <p class="hero-description">Music to Mic plays Spotify, YouTube or any app through your mic, with your voice on top. Only the app you pick is sent, so Discord pings and game sounds stay out.</p>
+          <div class="actions">
+            <a class="button" href="https://github.com/bloxnest/music-to-mic/releases/latest/download/MusicToMic.exe">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download Music to Mic
+            </a>
+            <a class="button button-secondary" href="guide.html">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"/></svg>Setup guide
+            </a>
+          </div>
+          <p class="platform">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-windows"/></svg>Free for Windows 10 and 11 · Needs VB-CABLE (free) · Open source (MIT)
+          </p>
+        </div>
+        <img class="hero-app shot" src="assets/app-main.png" width="{{MAIN_W}}" height="{{MAIN_H}}" loading="eager" fetchpriority="high" decoding="async"
+             alt="Music to Mic window routing Spotify and a microphone into CABLE Input, with the music, mic and output meters lit.">
+      </div>
+    </section>
+
+    <section class="section container" aria-labelledby="features-title">
+      <h2 class="section-title" id="features-title" data-reveal>Just the music you pick. Then your voice.</h2>
+      <ul class="three-columns" role="list">
+        <li class="feature" data-reveal data-delay="60">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-filter"/></svg>
+          <h3>One app, nothing else</h3>
+          <p>Pick Spotify, Chrome, VLC or any app. Discord pings, game sounds and notifications aren't sent.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="120">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg>
+          <h3>Your voice and the music</h3>
+          <p>Mic only, music only, or both, each with its own volume. Presets like Background Music keep it under your voice.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="180">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-keyboard"/></svg>
+          <h3>Push-to-music</h3>
+          <p>Hold F8, or a mouse side button, to send music. Let go and it stops. Roblox push-to-talk works as normal.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="60">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-activity"/></svg>
+          <h3>Never too loud</h3>
+          <p>Live meters show the music, your mic and the mix, and a limiter stops it clipping before anyone's ears get blasted.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="120">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-timer"/></svg>
+          <h3>In sync for hours</h3>
+          <p>About a tenth of a second behind, and it stays that way. No drifting, no stutter, even on long sessions.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="180">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-panel-bottom"/></svg>
+          <h3>Out of your way</h3>
+          <p>Close it and it keeps playing from the hidden icons, using almost no CPU. If the music app closes, it waits for it.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section container" aria-labelledby="how-title" data-reveal>
+      <h2 class="section-title" id="how-title">Three steps, once.</h2>
+      <ol class="three-columns steps" role="list">
+        <li class="step">
+          <span class="step-number" aria-hidden="true">01</span>
+          <h3>Install VB-CABLE</h3>
+          <p>A free virtual microphone by VB-Audio. Windows needs it to give Roblox a new mic.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">02</span>
+          <h3>Pick the music and your mic</h3>
+          <p>Open Music to Mic, choose the app playing music and your real mic, and press Start routing.</p>
+        </li>
+        <li class="step">
+          <span class="step-number" aria-hidden="true">03</span>
+          <h3>Choose CABLE Output in Roblox</h3>
+          <p>In Roblox's settings, set your microphone to CABLE Output. That's it.</p>
+        </li>
+      </ol>
+      <a class="more-link" href="guide.html">Read the full setup guide <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
+    </section>
+
+    <section class="section container" aria-labelledby="showcase-title">
+      <div class="split">
+        <img class="showcase-art shot" src="assets/app-setup.png" width="{{SETUP_W}}" height="{{SETUP_H}}" loading="lazy" decoding="async" data-reveal
+             alt="Music to Mic's Roblox Setup page: virtual microphone found, and the seven setup steps.">
+        <div class="showcase-copy" data-reveal data-delay="90">
+          <h2 id="showcase-title">To Roblox, it's<br>just a microphone.</h2>
+          <p>Music to Mic never touches Roblox. It mixes your music and your voice into a virtual cable, and Roblox listens to that cable like any other mic.</p>
+          <ul class="points">
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-shield-check"/></svg>No injection, no Roblox files, no memory access</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-mic"/></svg>Works with Roblox push-to-talk and mute</li>
+            <li><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-music"/></svg>Built-in setup page that checks VB-CABLE for you</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="safety" aria-labelledby="safety-title">
+      <h2 class="section-title" id="safety-title" data-reveal>Check the facts, not a badge.</h2>
+      <p class="section-intro" data-reveal>The code, the build and the limits are all public.</p>
+      <ul class="three-columns" role="list">
+        <li class="feature" data-reveal data-delay="60">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-code"/></svg>
+          <h3>Every line is public</h3>
+          <p>The full source is on GitHub under the MIT license. Read it, or build it yourself with what's already in Windows.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="120">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-wifi-off"/></svg>
+          <h3>No internet, no recording</h3>
+          <p>The app never goes online and never saves audio. Its small log only says what happened, like "routing started".</p>
+        </li>
+        <li class="feature" data-reveal data-delay="180">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-keyboard"/></svg>
+          <h3>Keys are read, not hooked</h3>
+          <p>Push-to-music only checks whether your key is held. It never blocks it, so Roblox still gets every key.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="60">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-file-check"/></svg>
+          <h3>Built by GitHub, not by hand</h3>
+          <p>Every release is built from the public code by GitHub Actions, with a checksum and a signed build record.</p>
+        </li>
+        <li class="feature" data-reveal data-delay="120">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-feather"/></svg>
+          <h3>Small, no admin</h3>
+          <p>One exe of about 250 KB. No installer and no administrator rights (only VB-CABLE's own installer needs them).</p>
+        </li>
+        <li class="feature" data-reveal data-delay="180">
+          <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-test-tube"/></svg>
+          <h3>Tested for real</h3>
+          <p>87 self-tests check that only the chosen app is sent, through the real cable, and a 10-minute run checks nothing drifts.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section container" id="verify" aria-labelledby="verify-title">
+      <div class="split verify-grid" data-reveal>
+        <div class="verify-copy">
+          <h2 id="verify-title">Check the download yourself.</h2>
+          <p>Every release lists its SHA-256 checksum. Compare it with your copy, and with the GitHub CLI you can confirm GitHub built it from this code.</p>
+          <p class="fine">These checks prove the file is the one GitHub built from the public source. They're not Roblox approval.</p>
+        </div>
+        <div class="commands">
+          <div class="command">
+            <div class="command-head"><span>PowerShell: checksum</span><button class="copy" type="button" data-copy="c1">Copy</button></div>
+            <pre id="c1">Get-FileHash .\MusicToMic.exe -Algorithm SHA256</pre>
+          </div>
+          <div class="command">
+            <div class="command-head"><span>GitHub CLI: build provenance</span><button class="copy" type="button" data-copy="c2">Copy</button></div>
+            <pre id="c2">gh attestation verify MusicToMic.exe --repo bloxnest/music-to-mic</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" aria-labelledby="story-title">
+      <div class="split story-grid" data-reveal>
+        <div>
+          <h2 id="story-title">A small app from xRed1.</h2>
+          <p class="signature">xRed1, student developer</p>
+        </div>
+        <div class="story-copy">
+          <p>I'm xRed1, the student behind BloxNest and NudgeNest. Music to Mic is free, has no ads and no accounts, and every line is on GitHub. If something doesn't work, open an issue there and I'll take a look.</p>
+          <p class="aside">More from me: <a href="https://bloxnest.github.io/">BloxNest</a> (more Roblox windows) and <a href="https://bloxnest.github.io/nudge-nest/">NudgeNest</a> (no more idle kicks).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="faq" aria-labelledby="faq-title">
+      <div class="split faq-grid" data-reveal>
+        <h2 id="faq-title">A few quick answers.</h2>
+        <div class="faq-list">
+          <details>
+            <summary><span>Do my friends need it too?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">No. Only the person playing the music needs Music to Mic and VB-CABLE. Everyone else just hears your mic in Roblox.</p>
+          </details>
+          <details>
+            <summary><span>Why do I need VB-CABLE?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">Windows can't create a new microphone without a signed driver. VB-CABLE is a free, signed virtual audio cable by VB-Audio: Music to Mic plays into "CABLE Input", and Roblox hears it from "CABLE Output". VoiceMeeter and Virtual Audio Cable work too.</p>
+          </details>
+          <details>
+            <summary><span>I can't hear anything since installing VB-CABLE</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">Windows sometimes makes CABLE Input your default speakers after the install. Set your real speakers back in Windows Sound settings; Music to Mic warns you when this happens. <a href="guide.html#speakers">How to fix it</a>.</p>
+          </details>
+          <details>
+            <summary><span>Is it allowed in Roblox?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">To Roblox it's just a microphone input; nothing about Roblox is changed. Follow Roblox's rules for voice chat and only play music you're allowed to share. Music to Mic isn't made or approved by Roblox, so use it at your own risk.</p>
+          </details>
+          <details>
+            <summary><span>Is there a delay?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">About a tenth of a second from the music app to Roblox's mic, and it stays steady for hours.</p>
+          </details>
+          <details>
+            <summary><span>Why does Windows show a warning?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">Music to Mic isn't code-signed yet, so Windows may say "Windows protected your PC". If you downloaded it from this site or GitHub, choose More info, then Run anyway. You can check the checksum first.</p>
+          </details>
+          <details>
+            <summary><span>Does it work on Mac, phone or console?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">No. It needs Windows 10 (version 2004 or newer) or Windows 11, and the Roblox app on that PC.</p>
+          </details>
+          <details>
+            <summary><span>How do I uninstall it?</span><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></summary>
+            <p class="faq-answer">Right-click the icon in the hidden icons and choose Exit, then delete MusicToMic.exe and the %APPDATA%\MusicToMic folder. To remove VB-CABLE, run its setup again as administrator and choose Remove Driver.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section download" aria-labelledby="download-title">
+      <div class="split download-grid container" data-reveal>
+        <h2 id="download-title">Bring the music.</h2>
+        <div class="download-cta">
+          <div class="actions">
+            <a class="button" href="https://github.com/bloxnest/music-to-mic/releases/latest/download/MusicToMic.exe">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-download"/></svg>Download Music to Mic
+            </a>
+            <a class="button button-secondary" href="guide.html">
+              <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-book"/></svg>Setup guide
+            </a>
+          </div>
+          <p class="platform">
+            <svg class="icon" aria-hidden="true" focusable="false"><use href="#i-windows"/></svg>Free for Windows 10 and 11 · Not code-signed yet
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+{{FOOTER}}
+  <script src="assets/site.js"></script>
+</body>
+</html>

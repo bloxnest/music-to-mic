@@ -6,6 +6,18 @@
 
 <p align="center">Play music from Spotify, Chrome, YouTube or any app through your microphone in Roblox voice chat.<br>Made by xRed1.</p>
 
+<p align="center">
+  <a href="https://github.com/bloxnest/music-to-mic/releases/latest/download/MusicToMic.exe">Download</a> ·
+  <a href="https://bloxnest.github.io/music-to-mic/guide.html">Setup guide</a> ·
+  <a href="https://bloxnest.github.io/music-to-mic/">Website</a> ·
+  <a href="PRIVACY.md">Privacy</a> ·
+  <a href="SECURITY.md">Security</a>
+</p>
+
+<p align="center">
+  <img src="docs/assets/app-main.png" width="440" alt="Music to Mic routing Spotify and a microphone into the virtual cable">
+</p>
+
 ---
 
 ## What it does
@@ -27,6 +39,10 @@ Windows can't create a new microphone without a driver, so Music to Mic plays in
 4. In Roblox, open Settings and pick **CABLE Output** as your microphone.
 
 The **?** button in the app shows these steps and whether VB-CABLE is installed. VoiceMeeter and Virtual Audio Cable work too.
+The [setup guide](https://bloxnest.github.io/music-to-mic/guide.html) has pictures and fixes for common problems.
+
+If you hear nothing after installing VB-CABLE, Windows made **CABLE Input** your default speakers: set your real
+speakers back in Windows Sound settings (the app warns about this).
 
 ## How it works
 
@@ -51,11 +67,14 @@ Needs nothing but Windows (it uses the C# compiler built into .NET Framework 4.8
 
 ```
 build.bat                 builds MusicToMic.exe
-tests\run-tests.bat       ~90 self-tests: mixer, drift, settings, devices, real routing, window
+tests\run-tests.bat       ~90 self-tests: mixer, drift, settings, devices, real routing, cable, window
 tests\run-tests.bat long  a 10-minute stability run
+python tools\make_icon.py  icons, logos and favicons
+python tools\make_site.py  the website (docs\) from tools\site
 ```
 
 The routing tests play quiet test tones on the digital (S/PDIF) output, which normally has nothing plugged in, so you hear nothing.
+The cable tests play them into VB-CABLE: mute your mic in Roblox (or close it) while they run.
 
 ## License
 

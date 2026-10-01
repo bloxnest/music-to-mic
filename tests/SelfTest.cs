@@ -53,6 +53,7 @@ namespace MusicToMic.Tests
                 if (run("cable")) TestCable();
                 if (run("window")) TestWindow();
                 if (run("long")) TestLongRun(only.Contains("long") ? 10 : 0);
+                if (only.Contains("shots")) WebsiteShots();   // only when asked for by name
             }
             catch (Exception e)
             {
@@ -300,6 +301,18 @@ namespace MusicToMic.Tests
             AudioDevice cable = outputs.FirstOrDefault(d => d.IsVirtualCable);
             Console.WriteLine("        (virtual cable on this PC: " + (cable == null ? "none" : cable.Name + " -> " + cable.CableMicName)
                 + "; Windows defaults: " + outputs.First(d => d.IsDefault).Name + " / " + mics.First(d => d.IsDefault).Name + ")");
+            var normal = new List<AudioDevice>
+            {
+                new AudioDevice { Name = "Speakers (Realtek(R) Audio)", IsDefault = true },
+                new AudioDevice { Name = "CABLE Input (VB-Audio Virtual Cable)", CableMicName = "CABLE Output (VB-Audio Virtual Cable)" },
+            };
+            var cableDefault = new List<AudioDevice>
+            {
+                new AudioDevice { Name = "Speakers (Realtek(R) Audio)" },
+                new AudioDevice { Name = "CABLE Input (VB-Audio Virtual Cable)", CableMicName = "CABLE Output (VB-Audio Virtual Cable)", IsDefault = true },
+            };
+            Check(Router.DefaultSpeakersWarning(normal) == null && Router.DefaultSpeakersWarning(cableDefault) != null,
+                "warns when Windows made the virtual cable the default speakers (a common VB-CABLE surprise)");
             Check(Devices.IsMultiChannelCable("CABLE In 16ch (VB-Audio Virtual Cable)") && Devices.IsMultiChannelCable("CABLE In 16 Ch (VB-Audio Virtual Cable)")
                 && !Devices.IsMultiChannelCable("Speakers (VB-Audio Virtual Cable)"), "the 16-channel cable input is told apart from the normal one");
         }
@@ -323,6 +336,8 @@ namespace MusicToMic.Tests
             Check(sp != null && ch != null, "both stand-in apps show up in the source list");
             Check(ch != null && ch.ProcessId == chrome.Id, "an app playing from a helper process is listed as the app itself (like Chrome)");
             Check(sp != null && sp.Playing, "...and marked as playing");
+            Check(apps.All(a => !AudioApps.IsSystemProcess(a.Exe)) && AudioApps.IsSystemProcess("audiodg.exe"),
+                "Windows' own audio engine (audiodg) is never offered as a source");
 
             new Settings().Save();
             var router = new Router(Settings.Load());
@@ -368,7 +383,8 @@ namespace MusicToMic.Tests
             router.Mode = RouteMode.MicOnly;
             Pump(1.0);
             got = own.Last(0.5);
-            Check(Band(got, 440) < 0.003 && router.Routing, "Mic only: no music");
+            // a real mic hears the room, so allow a little; the routed music alone would be 0.1
+            Check(Band(got, 440) < 0.02 && router.Routing, "Mic only: no music (" + Band(got, 440).ToString("0.0000") + ", the music would be 0.1)");
             router.Mode = RouteMode.MusicOnly;
             Pump(1.0);
 
@@ -682,6 +698,67 @@ namespace MusicToMic.Tests
                 Pump(0.3);
                 if (tone != null) KillProcess(tone);
             }
+        }
+
+        // ---------- website screenshots ----------
+
+        /// <summary>
+        /// Website screenshots (run-tests.bat shots): routing a stand-in "Spotify" and the real default mic into the
+        /// virtual cable, drawn at 2x into testsin\website. tools\make_screenshots.py crops them for docsssets.
+        /// </summary>
+        private static void WebsiteShots()
+        {
+            Section("Website screenshots");
+            string folder = Path.Combine(bin, "website");
+            Directory.CreateDirectory(folder);
+            new Settings().Save();
+            Process demo = StartUnderExplorer(Path.Combine(bin, "SpotifyDemo.exe"),
+                "--freq=330 --amp=0.35 \"--device=" + QuietDevice + "\" --seconds=120");
+            started.Add(demo);
+            AudioApp app = null;
+            PumpUntil(() => (app = AudioApps.Find("spotifydemo.exe")) != null && app.Playing, 8);
+            var w = new MainWindow(null, null);
+            w.ShutDown = delegate { };
+            try
+            {
+                w.Router.RefreshApps();
+                w.Router.SelectSource(app.ToTarget());
+                w.Router.Mode = RouteMode.MicAndMusic;
+                w.Router.SetVolumes(0.5f, 1f, 1f);
+                w.ShowFromTray();
+                Pump(0.5);
+                w.Router.Start();
+                Pump(4.0);
+                Check(w.Router.Routing && w.Router.Output.IsVirtualCable, "routing " + app.Name + " + mic into " + w.Router.Output.Name);
+                RenderClean(w, Path.Combine(folder, "main.png"));
+                w.ShowPanel(Page.Setup);
+                Pump(0.8);
+                RenderClean(w, Path.Combine(folder, "setup.png"));
+                w.ShowPanel(Page.Settings);
+                Pump(0.8);
+                RenderClean(w, Path.Combine(folder, "settings.png"));
+                w.ShowPanel(Page.Main);
+                Pump(0.5);
+                w.Router.Stop();
+                Check(true, "screenshots saved to tests\\bin\\website");
+            }
+            finally
+            {
+                w.Quit();
+                Pump(0.3);
+                KillProcess(demo);
+            }
+        }
+
+        /// <summary>The window drawn on its own (no desktop behind it), at 2x for sharp website screenshots.</summary>
+        private static void RenderClean(MainWindow w, string path)
+        {
+            int width = (int)Math.Ceiling(w.Window.ActualWidth * 2), height = (int)Math.Ceiling(w.Window.ActualHeight * 2);
+            var picture = new WpfMedia.Imaging.RenderTargetBitmap(width, height, 192, 192, WpfMedia.PixelFormats.Pbgra32);
+            picture.Render(w.Window);
+            var png = new WpfMedia.Imaging.PngBitmapEncoder();
+            png.Frames.Add(WpfMedia.Imaging.BitmapFrame.Create(picture));
+            using (var file = File.Create(path)) png.Save(file);
         }
 
         // ---------- a long run ----------

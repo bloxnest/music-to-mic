@@ -9,10 +9,15 @@ size is smooth, never pixel art.
 Run: python tools/make_icon.py   (needs Pillow)
 """
 import math
+import re
 import struct
 from io import BytesIO
 from pathlib import Path
 
+from fontTools.pens.boundsPen import BoundsPen
+from fontTools.pens.svgPathPen import SVGPathPen
+from fontTools.pens.transformPen import TransformPen
+from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -125,6 +130,57 @@ def save_ico(path, frames):
     Path(path).write_bytes(data + b"".join(pictures))
 
 
+# ---------- vector versions (website SVGs and the app's XAML logo): the glyphs' own outlines ----------
+
+MIC_BOX = (76 + 154 * 0.12, 90 + 124 * 0.16, 76 + 154 * 0.58, 90 + 124 * 0.84)
+NOTE_BOX = (76 + 154 * 0.58, 90 + 124 * 0.22, 76 + 154 * 0.90, 90 + 124 * 0.68)
+
+
+def glyph_path(font, char, box, digits=1):
+    """SVG/XAML path data for one icon-font glyph, as big as fits in box (x0, y0, x1, y1), centred."""
+    gs = font.getGlyphSet()
+    name = font.getBestCmap()[ord(char)]
+    bounds = BoundsPen(gs)
+    gs[name].draw(bounds)
+    xmin, ymin, xmax, ymax = bounds.bounds
+    x0, y0, x1, y1 = box
+    k = min((x1 - x0) / (xmax - xmin), (y1 - y0) / (ymax - ymin))
+    tx = (x0 + x1) / 2 - (xmin + xmax) / 2 * k
+    ty = (y0 + y1) / 2 + (ymin + ymax) / 2 * k
+    pen = SVGPathPen(gs, ntos=lambda v: f"{v:.{digits}f}".rstrip("0").rstrip("."))
+    gs[name].draw(TransformPen(pen, (k, 0, 0, -k, tx, ty)))
+    return pen.getCommands()
+
+
+def write_vectors(assets, docs):
+    font = TTFont(ICONS)
+    glyphs = glyph_path(font, MIC, MIC_BOX) + " " + glyph_path(font, NOTE, NOTE_BOX)
+    logo_svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Music to Mic logo">
+  <g transform="rotate(-12 128 128)">
+    <path fill="#9A9AAA" d="M28 38H182V66H56V204H28Z"/>
+    <path fill="#A78BFA" d="M76 90H230V214H76Z"/>
+    <path fill="#1B1430" d="{glyphs}"/>
+  </g>
+</svg>
+'''
+    small_mic = glyph_path(font, MIC, (3.6, 2.4, 12.4, 13.6), digits=2)
+    favicon_svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Music to Mic">
+  <rect width="16" height="16" rx="3.2" fill="#A78BFA"/>
+  <path fill="#1B1430" d="{small_mic}"/>
+</svg>
+'''
+    for folder in (assets, docs / "assets"):
+        (folder / "logo.svg").write_text(logo_svg, encoding="utf-8", newline="\n")
+        (folder / "favicon.svg").write_text(favicon_svg, encoding="utf-8", newline="\n")
+    # the app's header logo: one path, filled nonzero ("F1"), so it never depends on an installed font
+    xaml = ROOT / "src" / "MainWindow.xaml"
+    text = xaml.read_text(encoding="utf-8")
+    text, n = re.subn(r'(<Path x:Name="LogoGlyphs" Fill="#1B1430" Data=")[^"]*("/>)', lambda m: m.group(1) + "F1 " + glyphs + m.group(2), text)
+    if n != 1:
+        raise SystemExit(f"expected the LogoGlyphs path in MainWindow.xaml, found {n}")
+    xaml.write_text(text, encoding="utf-8", newline="\n")
+
+
 def main():
     assets = ROOT / "assets"
     assets.mkdir(exist_ok=True)
@@ -133,7 +189,17 @@ def main():
     for state, fill in TRAY.items():
         save_ico(assets / f"tray-{state}.ico", [straight(s, fill, frame=False) for s in (16, 20, 24, 32)])
     logo(256).save(assets / "logo-256.png")
-    print("icons written to", assets)
+
+    docs = ROOT / "docs"
+    (docs / "assets").mkdir(parents=True, exist_ok=True)
+    night = (0x0D, 0x0C, 0x12)
+    save_ico(docs / "favicon.ico", [straight(16, frame=False), straight(32), logo(48)])
+    straight(32).save(docs / "assets" / "favicon-32.png")
+    logo(180, background=night, pad=0.1).save(docs / "apple-touch-icon.png")
+    logo(192, pad=0.04).save(docs / "assets" / "icon-192.png")
+    logo(512, pad=0.04).save(docs / "assets" / "icon-512.png")
+    write_vectors(assets, docs)
+    print("icons written to", assets, "and", docs)
 
 
 if __name__ == "__main__":
