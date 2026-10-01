@@ -1,0 +1,4 @@
+*.exe
+*.pdb
+tests/bin/
+__pycache__/
