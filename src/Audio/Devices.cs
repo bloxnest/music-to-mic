@@ -176,7 +176,31 @@ namespace MusicToMic.Audio
             foreach (string candidate in candidates)
                 foreach (AudioDevice mic in mics)
                     if (string.Equals(mic.Name, candidate, StringComparison.OrdinalIgnoreCase)) return mic.Name;
-            return null;
+            // Windows sometimes names the playback side by its jack ("Speakers (VB-Audio Virtual Cable)"), or the
+            // driver adds variants ("CABLE In 16 Ch (...)"): pair by the driver name in brackets, if that driver has one mic
+            string driver = Driver(outputName);
+            if (driver == null) return null;
+            AudioDevice only = null;
+            foreach (AudioDevice mic in mics)
+            {
+                if (!string.Equals(Driver(mic.Name), driver, StringComparison.OrdinalIgnoreCase)) continue;
+                if (only != null) return null;   // several (e.g. Virtual Audio Cable lines): only exact names count
+                only = mic;
+            }
+            return only != null ? only.Name : null;
+        }
+
+        /// <summary>The part of a device name in brackets: Windows puts the driver's name there.</summary>
+        private static string Driver(string name)
+        {
+            int open = name.LastIndexOf('('), close = name.LastIndexOf(')');
+            return open >= 0 && close > open ? name.Substring(open + 1, close - open - 1).Trim() : null;
+        }
+
+        /// <summary>VB-CABLE's extra 16-channel input ("CABLE In 16 Ch" / "16ch"): works, but stereo is the one to use.</summary>
+        public static bool IsMultiChannelCable(string name)
+        {
+            return name.Replace(" ", "").IndexOf("16ch", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         public static bool LooksLikeCable(string name)

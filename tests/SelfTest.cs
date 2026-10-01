@@ -50,6 +50,7 @@ namespace MusicToMic.Tests
                 if (run("settings")) TestSettings();
                 if (run("devices")) TestDevices();
                 if (run("routing")) TestRouting();
+                if (run("cable")) TestCable();
                 if (run("window")) TestWindow();
                 if (run("long")) TestLongRun(only.Contains("long") ? 10 : 0);
             }
@@ -291,8 +292,16 @@ namespace MusicToMic.Tests
                 && Devices.CableMic("SteelSeries Sonar - Microphone (SteelSeries Sonar Virtual Audio Device)", fakeMics) == null,
                 "speakers and Sonar aren't mistaken for a virtual mic");
             Check(Devices.CableMic("CABLE Input (VB-Audio Virtual Cable)", new List<AudioDevice>()) == null, "a cable without its mic side doesn't count");
+            Check(Devices.CableMic("Speakers (VB-Audio Virtual Cable)", fakeMics) == "CABLE Output (VB-Audio Virtual Cable)"
+                && Devices.CableMic("CABLE In 16 Ch (VB-Audio Virtual Cable)", fakeMics) == "CABLE Output (VB-Audio Virtual Cable)",
+                "VB-CABLE is found even when Windows calls its input “Speakers”, and its 16-channel input too");
+            var twoLines = new List<AudioDevice> { new AudioDevice { Name = "Line 1 (Virtual Audio Cable)" }, new AudioDevice { Name = "Line 2 (Virtual Audio Cable)" } };
+            Check(Devices.CableMic("Line 2 (Virtual Audio Cable)", twoLines) == "Line 2 (Virtual Audio Cable)", "...while Virtual Audio Cable lines still pair by their exact names");
             AudioDevice cable = outputs.FirstOrDefault(d => d.IsVirtualCable);
-            Console.WriteLine("        (virtual cable on this PC: " + (cable == null ? "none" : cable.Name + " -> " + cable.CableMicName) + ")");
+            Console.WriteLine("        (virtual cable on this PC: " + (cable == null ? "none" : cable.Name + " -> " + cable.CableMicName)
+                + "; Windows defaults: " + outputs.First(d => d.IsDefault).Name + " / " + mics.First(d => d.IsDefault).Name + ")");
+            Check(Devices.IsMultiChannelCable("CABLE In 16ch (VB-Audio Virtual Cable)") && Devices.IsMultiChannelCable("CABLE In 16 Ch (VB-Audio Virtual Cable)")
+                && !Devices.IsMultiChannelCable("Speakers (VB-Audio Virtual Cable)"), "the 16-channel cable input is told apart from the normal one");
         }
 
         // ---------- routing with real devices ----------
@@ -431,6 +440,82 @@ namespace MusicToMic.Tests
             own.Dispose();
             router.Dispose();
             KillProcess(again);
+            KillProcess(chrome);
+        }
+
+        // ---------- end to end through the virtual cable (what Roblox hears) ----------
+
+        private static void TestCable()
+        {
+            Section("Through the virtual cable (what Roblox hears)");
+            new Settings().Save();
+            var router = new Router(Settings.Load());
+            AudioDevice cable = router.FirstCable;
+            if (cable == null)
+            {
+                Console.WriteLine("        (skipped: no virtual cable installed)");
+                return;
+            }
+            AudioDevice cableMic = router.Mics.First(m => m.Name == cable.CableMicName);
+            Check(router.Output != null && router.Output.Id == cable.Id && !Devices.IsMultiChannelCable(cable.Name),
+                "the app picks the virtual cable by itself: " + cable.Name + " (Roblox mic: " + cable.CableMicName + ")");
+            Check(router.Status == "Ready" && router.Detail.Contains(cable.CableMicName), "status: " + router.Status + ". " + router.Detail);
+
+            Process spotify = Tone("TestSpotify.exe", 440, 0.2, "");
+            Process chrome = Tone("TestChrome.exe", 660, 0.2, " --child");
+            AudioApp sp = null;
+            PumpUntil(() => (sp = AudioApps.Find("testspotify.exe")) != null, 5);
+            router.SelectSource(sp.ToTarget());
+            router.Mode = RouteMode.MusicOnly;
+            router.SetVolumes(0.5f, 1f, 1f);
+            Check(router.Start(), "routing into the cable starts");
+            Capture roblox = Capture.OfDevice(cableMic);
+            Pump(2.0);
+            float[] got = roblox.Last(1.0);
+            Check(Near(Band(got, 440), 0.1, 0.012) && Band(got, 660) < 0.003,
+                "the virtual mic gets Spotify at 50% (" + Band(got, 440).ToString("0.000") + ") and nothing from Chrome (" + Band(got, 660).ToString("0.0000") + ")");
+
+            router.Mode = RouteMode.MicAndMusic;
+            Pump(1.5);
+            got = roblox.Last(1.0);
+            Check(router.Routing && Near(Band(got, 440), 0.1, 0.015), "Mic + Spotify reach the virtual mic together");
+            router.Mode = RouteMode.MusicOnly;
+
+            // delay, app to virtual mic
+            KillProcess(spotify);
+            PumpUntil(() => router.WaitingForSource, 4);
+            Process beeper = Tone("TestSpotify.exe", 1000, 0.3, " --beeps");
+            PumpUntil(() => !router.WaitingForSource, 8);
+            Capture input = Capture.Of(beeper.Id);
+            Pump(2.5);
+            double delay = Delay(input, roblox);
+            Check(delay > 0 && delay < 150, "delay from the app to Roblox's mic: " + delay.ToString("0") + " ms");
+            input.Dispose();
+            KillProcess(beeper);
+            PumpUntil(() => router.WaitingForSource, 4);
+            Process steady = Tone("TestSpotify.exe", 440, 0.2, "");
+            PumpUntil(() => !router.WaitingForSource, 8);
+
+            // the cable runs on its own clock: two minutes to check nothing drifts or drops
+            Pump(20);
+            float low = float.MaxValue, high = 0;
+            int good = 0, checks = 0;
+            for (int i = 0; i < 20; i++)
+            {
+                Pump(5);
+                low = Math.Min(low, router.Engine.LatencyMs);
+                high = Math.Max(high, router.Engine.LatencyMs);
+                checks++;
+                if (Near(Band(roblox.Last(1.0), 440), 0.1, 0.012)) good++;
+            }
+            Check(good == checks && high - low < 15 && router.Engine.Underruns == 0,
+                "100 s against the cable's own clock: tone right in " + good + "/" + checks + " checks, delay " + low.ToString("0") + "-" + high.ToString("0")
+                + " ms, speed matched at " + ((router.Engine.SourceRatio - 1) * 1e6).ToString("0") + " ppm, " + router.Engine.Underruns + " gaps");
+
+            router.Stop();
+            roblox.Dispose();
+            router.Dispose();
+            KillProcess(steady);
             KillProcess(chrome);
         }
 
@@ -659,13 +744,13 @@ namespace MusicToMic.Tests
             private volatile bool stop;
             private readonly object gate = new object();
 
-            private Capture(int pid)
+            private Capture(Func<CaptureStream> open)
             {
                 var ready = new ManualResetEvent(false);
                 CaptureStream s = null;
                 thread = new Thread(() =>
                 {
-                    s = CaptureStream.OpenProcess(pid, true, "recording");
+                    s = open();
                     ready.Set();
                     while (!stop)
                     {
@@ -680,7 +765,18 @@ namespace MusicToMic.Tests
                 stream = s;
             }
 
-            public static Capture Of(int pid) { return new Capture(pid); }
+            public static Capture Of(int pid) { return new Capture(() => CaptureStream.OpenProcess(pid, true, "recording")); }
+
+            /// <summary>Records a microphone (e.g. CABLE Output): exactly what an app like Roblox gets from it.</summary>
+            public static Capture OfDevice(AudioDevice mic)
+            {
+                return new Capture(() =>
+                {
+                    IMMDevice device = Devices.Get(mic.Id, mic.Name);
+                    try { return CaptureStream.OpenDevice(device, mic.Name, false); }
+                    finally { Marshal.ReleaseComObject(device); }
+                });
+            }
 
             public float[] Last(double seconds)
             {

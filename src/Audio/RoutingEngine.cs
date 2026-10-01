@@ -49,6 +49,7 @@ namespace MusicToMic.Audio
         private SourceTarget target;
         private bool wantMonitor;
         private string Current = "output";   // which part was working when an error came, to name it
+        private float smoothedLatency;
 
         /// <summary>Push-to-music key (Windows virtual-key code), 0 = off. Checked on the audio thread, nothing is hooked.</summary>
         public volatile int PushKey;
@@ -245,8 +246,12 @@ namespace MusicToMic.Audio
                 SourceRatio = (float)sourceReader.Ratio;
                 MicRatio = (float)micReader.Ratio;
             }
-            LatencyMs = (queued + Math.Max(0, want)) * 1000f / Format.Rate
+            // the delay this app adds (output queue + input buffer), smoothed over about a second: packets arrive
+            // in 10 ms steps, so the instant value wobbles
+            float now = (queued + Math.Max(0, want)) * 1000f / Format.Rate
                 + (float)(source != null ? sourceReader.FillFrames : micReader.FillFrames) * 1000f / Format.Rate;
+            smoothedLatency = smoothedLatency == 0 ? now : smoothedLatency + (now - smoothedLatency) * 0.01f;
+            LatencyMs = smoothedLatency;
 
             if (monitor != null)
             {

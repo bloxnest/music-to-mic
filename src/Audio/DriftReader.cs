@@ -29,7 +29,7 @@ namespace MusicToMic.Audio
         public int Underruns, Overruns;
 
         /// <summary>Self-tests: read at exactly this speed instead of following the buffer (0 = normal).</summary>
-        internal double FixedRatio;
+        internal double FixedRatio { get; set; }
 
         public DriftReader(FloatRing ring, int targetFrames)
         {

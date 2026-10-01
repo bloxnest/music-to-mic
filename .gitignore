@@ -2,3 +2,4 @@
 *.pdb
 tests/bin/
 __pycache__/
+share/

@@ -69,12 +69,19 @@ namespace MusicToMic
 
         public bool CableInstalled { get { return FirstCable != null; } }
 
+        /// <summary>The virtual cable to use by default: a normal stereo one first (VB-CABLE also offers a 16-channel input).</summary>
         public AudioDevice FirstCable
         {
             get
             {
-                foreach (AudioDevice d in Outputs) if (d.IsVirtualCable) return d;
-                return null;
+                AudioDevice any = null;
+                foreach (AudioDevice d in Outputs)
+                {
+                    if (!d.IsVirtualCable) continue;
+                    if (!Devices.IsMultiChannelCable(d.Name)) return d;
+                    if (any == null) any = d;
+                }
+                return any;
             }
         }
 
